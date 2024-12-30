@@ -16,8 +16,7 @@ export class PostsQueryRepository {
 
     async findPostByID(postID:string, userId?: ObjectId):Promise<HydratedDocument<any> | null> {
 
-      const foundPost: any =  PostsModel.findOne({_id: new ObjectId(postID)})
-
+      const foundPost: any = await PostsModel.findOne({_id: new ObjectId(postID)})
         if (!foundPost) {
             return null;
         }

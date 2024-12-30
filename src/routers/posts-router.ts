@@ -1,7 +1,7 @@
 import {Router} from "express";
 import {validateBasicAuthorization} from "../middlewares/auth/auth-basic";
 import {validateBearerAuthorization} from "../middlewares/auth/auth-bearer";
-import {validationPostFindByParamId} from "../middlewares/validations/find-by-id/post-validation";
+import {validationPostFindByParamId} from "../middlewares/validations/find-by-id/blog_id-for_post-validation";
 import {validatePostsRequestsInputParams} from "../middlewares/validations/input/post-input-validation";
 import {validateCommentsRequestsInputParams} from "../middlewares/validations/input/comment-input-validation";
 import {validateErrorsMiddleware} from "../middlewares/general-errors-validator";
@@ -12,6 +12,7 @@ import {container} from "../composition-root";
 import {PostsController} from "../controllers/PostsController";
 import {validateLikesRequestsInputParams} from "../middlewares/validations/input/like-for-comment-input-validation";
 import {tokenParser} from "../middlewares/auth/token-parser";
+import {validationPostsFindByParamId} from "../middlewares/validations/find-by-id/post-validation";
 
 export const postsRouter = Router({})
 
@@ -24,7 +25,7 @@ postsRouter.get(
 
 postsRouter.get(
     '/:id',
-    validationPostFindByParamId,
+    validationPostsFindByParamId,
     tokenParser,
     validateErrorsMiddleware,
     postsController.getSpecificPost.bind(postsController)

@@ -14,7 +14,7 @@ if (!mongoURI){
 }
 export const client = new MongoClient(mongoURI);
 
-export const BlogModel = mongoose.model('blogs', BlogsSchema);
+export const BlogModel = mongoose.model('blogs', BlogsSchema)
 export const PostsModel = mongoose.model('posts', PostsSchema)
 export const CommentsModel = mongoose.model('comments', CommentSchema)
 export const UsersModel = mongoose.model('users', UsersSchema)
