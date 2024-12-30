@@ -1,10 +1,5 @@
 import {Request, Response, Router} from "express";
 import {CodeResponsesEnum} from "../utils/utils";
-import {
-    AttemptsModel,
-    BlogModel, CommentsModel, PostsModel, TokensModel,
-    UsersModel, UsersSessionModel
-} from "../infrastructure/repositories/db";
 import {container} from "../composition-root";
 import {TestingController} from "../controllers/TestingController";
 export const testingRouter = Router({})
