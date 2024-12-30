@@ -9,6 +9,7 @@ import {Request, Response} from "express";
 import {CodeResponsesEnum, getQueryValues} from "../utils/utils";
 import {BlogViewModel} from "../models/view/BlogViewModel";
 import {PostViewModel} from "../models/view/PostViewModel";
+import {ObjectId} from "mongodb";
 
 
 @injectable()
@@ -61,8 +62,15 @@ export class BlogsController {
             sortDirection: req.query.sortDirection,
             searchNameTerm:req.query.searchNameTerm
         })
-//@ts-ignore
-        const posts = await this.postsQueryRepository.findAllPostsByBlogID(blogID, {...queryValues})
+
+        const posts = await this.postsQueryRepository.findAllPosts(
+            queryValues.pageNumber,
+            queryValues.pageSize,
+            queryValues.sortBy,
+            queryValues.sortDirection,
+            new ObjectId(req.userId!),
+            blogID,
+        )
 
         if (!posts || !posts.items.length) {
             return res.status(CodeResponsesEnum.OK_200).send([])

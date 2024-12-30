@@ -33,7 +33,12 @@ export class PostsController {
             searchNameTerm: req.query.searchNameTerm
         })
 
-        const posts =  await this.postsQueryRepository.getAllPosts({...queryValues})
+        const posts =  await this.postsQueryRepository.findAllPosts(
+            queryValues.pageNumber,
+            queryValues.pageSize,
+            queryValues.sortBy,
+            queryValues.sortDirection,
+        )
 
         if (!posts || !posts.items.length) {
             return res.status(CodeResponsesEnum.OK_200).send([])
