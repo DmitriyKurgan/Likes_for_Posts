@@ -147,4 +147,22 @@ export class PostsController {
         res.sendStatus(CodeResponsesEnum.Not_content_204)
     }
 
+    async updateLikeStatus(req: Request, res: Response) {
+
+        const isUpdated = await this.postsService.updateLikeStatus(
+            req.params.id,
+            req.body.likeStatus,
+            req.userId!
+        )
+
+        if (isUpdated) {
+
+            const updatedComment = await this.postsQueryRepository.findPostByID(
+                req.params.id
+            )
+
+            res.status(204).json(updatedComment)
+        }
+    }
+
 }

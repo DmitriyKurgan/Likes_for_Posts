@@ -1,7 +1,7 @@
 import {body} from "express-validator";
 import {LikeStatusEnum} from "../../../utils/types";
 
-export const validateCommentsLikesRequestsInputParams: any = [
+export const validateLikesRequestsInputParams: any = [
     body("likeStatus")
         .exists()
         .withMessage("Like Status is required")

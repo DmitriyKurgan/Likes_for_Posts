@@ -8,7 +8,7 @@ import {
 } from "../middlewares/validations/find-by-id/comment-validation";
 import {validateCommentsRequestsInputParams} from "../middlewares/validations/input/comment-input-validation";
 import {
-    validateCommentsLikesRequestsInputParams
+    validateLikesRequestsInputParams
 } from "../middlewares/validations/input/like-for-comment-input-validation";
 import {validateErrorsMiddleware} from "../middlewares/general-errors-validator";
 import {container} from "../composition-root";
@@ -40,7 +40,7 @@ commentsRouter.put(
     '/:id/like-status',
     validationCommentsFindByParamId,
     validateBearerAuthorization,
-    validateCommentsLikesRequestsInputParams,
+    validateLikesRequestsInputParams,
     validateErrorsMiddleware,
     commentsController.updateLikeStatus.bind(commentsController)
 )

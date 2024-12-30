@@ -10,6 +10,7 @@ import {
 } from "../middlewares/validations/input/blog-id-for-post-creation-input-validation";
 import {container} from "../composition-root";
 import {PostsController} from "../controllers/PostsController";
+import {validateLikesRequestsInputParams} from "../middlewares/validations/input/like-for-comment-input-validation";
 
 export const postsRouter = Router({})
 
@@ -67,3 +68,12 @@ postsRouter.delete(
     validateErrorsMiddleware,
     postsController.deletePost.bind(postsController)
 )
+
+postsRouter.put(
+    "/:id/like-status",
+    validationPostFindByParamId,
+    validateBearerAuthorization,
+    validateLikesRequestsInputParams,
+    validateErrorsMiddleware,
+    postsController.updateLikeStatus.bind(postsController)
+);
