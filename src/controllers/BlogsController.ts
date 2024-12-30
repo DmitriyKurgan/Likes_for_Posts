@@ -87,17 +87,21 @@ export class BlogsController {
     }
 
     async createPostForBlog (req:Request, res:Response){
-        const blogID = req.params.id;
 
-        const blogByID: BlogViewModel | null = await this.blogsQueryRepository.findBlogByID(blogID);
+        const blogID = req.params.id
+        const blogByID: BlogViewModel | null = await this.blogsQueryRepository.findBlogByID(blogID)
+
         if(!blogID || !blogByID){
-            res.sendStatus(CodeResponsesEnum.Not_found_404);
+            res.sendStatus(CodeResponsesEnum.Not_found_404)
             return
         }
-        const newPost: PostViewModel | null = await this.postsService.createPost(req.body, blogByID.name, blogID);
+
+        const newPost: PostViewModel | null = await this.postsService.createPost(req.body, blogByID.name, blogID)
+
         if (newPost){
-            res.status(CodeResponsesEnum.Created_201).send(newPost);
+            res.status(CodeResponsesEnum.Created_201).send(newPost)
         }
+
     }
 
      async updateBlog (req:Request, res:Response) {
