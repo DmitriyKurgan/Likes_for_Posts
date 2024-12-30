@@ -11,6 +11,7 @@ import {UsersRepository} from "../infrastructure/repositories/users-repository";
 import {inject, injectable} from "inversify";
 import {PostsQueryRepository} from "../infrastructure/repositories/query-repositories/posts-query-repository";
 import {BlogsQueryRepository} from "../infrastructure/repositories/query-repositories/blogs-query-repository";
+import {ObjectId} from "mongodb";
 
 @injectable()
 export class PostsController {
@@ -50,7 +51,7 @@ export class PostsController {
     async getSpecificPost (req:Request, res:Response){
 
         const postID:string = req.params.id
-        const postByID:PostDBModel|null = await this.postsQueryRepository.findPostByID(postID)
+        const postByID:PostDBModel|null = await this.postsQueryRepository.findPostByID(postID, new ObjectId(req.userId!))
 
         if (!postID || !postByID){
             return res.sendStatus(CodeResponsesEnum.Not_found_404)
@@ -69,7 +70,7 @@ export class PostsController {
         })
 
         const postID:string = req.params.id
-        const postByID:PostDBModel|null = await this.postsQueryRepository.findPostByID(postID)
+        const postByID:PostDBModel|null = await this.postsQueryRepository.findPostByID(postID, new ObjectId(req.userId!))
 
         if (!postID || !postByID){
             return res.sendStatus(CodeResponsesEnum.Not_found_404)
