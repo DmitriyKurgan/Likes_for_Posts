@@ -1,14 +1,11 @@
 import {BlogModel, CommentsModel, PostsModel, UsersModel} from "../infrastructure/repositories/db";
 import {UserDBModel} from "../models/database/UserDBModel";
-import {PostDBModel} from "../models/database/PostDBModel";
 import {BlogDBModel} from "../models/database/BlogDBModel";
 import {CommentDBModel} from "../models/database/CommentDBModel";
-import {container} from "../composition-root";
 import {
     CommentMapper,
 } from "../infrastructure/repositories/query-repositories/comments-query-repository";
 
-//const commentsQueryRepository = container.resolve(CommentsQueryRepository)
 export enum CodeResponsesEnum {
     Incorrect_values_400 = 400,
     Unauthorized_401= 401,
@@ -46,53 +43,6 @@ export const getQueryValues = ({   pageNumber,
         searchEmailTerm: searchEmailTerm ? searchEmailTerm as string : undefined,
     };
 };
-
-
-export const getPostsFromDB = async (query:any, blogID?:string) => {
-    const byId = blogID ? {  blogId: blogID } : {};
-    const search = query.searchNameTerm
-        ? { title: { $regex: query.searchNameTerm, $options: 'i' } }
-        : {};
-    const filter = {
-        ...byId,
-        ...search,
-    };
-
-    try {
-        const items: PostDBModel[] = await PostsModel
-            .find(filter)
-            .sort({ [query.sortBy]: query.sortDirection === 'asc' ? 1 : -1 })
-            .skip((query.pageNumber - 1) * query.pageSize)
-            .limit(query.pageSize)
-            .lean();
-
-        const totalCount = await PostsModel.countDocuments(filter);
-        return {
-            pagesCount: Math.ceil(totalCount / query.pageSize),
-            page: query.pageNumber,
-            pageSize: query.pageSize,
-            totalCount,
-            items: items.map((post:PostDBModel) => ({
-                    id: post._id.toString(),
-                    title: post.title,
-                    shortDescription: post.shortDescription,
-                    content: post.content,
-                    blogId: post.blogId,
-                    blogName: post.blogName,
-                    createdAt: post.createdAt,
-                    extendedLikesInfo: {
-                    likesCount: post.likesInfo.likesCount,
-                        dislikesCount: post.likesInfo.dislikesCount,
-                        myStatus: "None",
-                        newestLikes: []
-                }
-            })),
-        };
-    } catch (e) {
-        console.log(e);
-        return { error: 'some error' };
-    }
-}
 
 export const getCommentsFromDB = async (query:any, userId:string, postID?:string) => {
     const byId = postID ? {  postId: postID } : {};
