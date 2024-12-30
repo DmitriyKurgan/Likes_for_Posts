@@ -1,8 +1,9 @@
 import {ObjectId, UpdateResult, DeleteResult} from "mongodb";
-import {BlogModel, PostsModel} from "./db";
+import {PostsModel} from "./db";
 import {PostDBModel} from "../../models/database/PostDBModel";
 import {PostViewModel} from "../../models/view/PostViewModel";
 import {injectable} from "inversify";
+import {HydratedDocument} from "mongoose";
 
 export const posts = [] as PostViewModel[]
 @injectable()
@@ -47,4 +48,104 @@ export class PostsRepository {
         await PostsModel.deleteMany({})
         return (await PostsModel.countDocuments()) === 0
     }
+
+    async findPostByID(postID:string):Promise<HydratedDocument<PostDBModel> | null> {
+        return PostsModel.findOne({_id: new ObjectId(postID)});
+    }
+
+    async findUserInLikesInfo(
+        postId: string,
+        userId: ObjectId
+    ): Promise<PostDBModel | null> {
+        const foundUser = await PostsModel.findOne(
+            PostsModel.findOne({
+                _id: postId,
+                "likesInfo.users.userId": userId,
+            })
+        )
+
+        if (!foundUser) {
+            return null
+        }
+
+        return foundUser
+    }
+
+
+    async pushUserInLikesInfo(
+        postId: string,
+        userId: ObjectId,
+        likeStatus: string
+    ): Promise<boolean> {
+        const result: any = await PostsModel.updateOne(
+            { _id: postId },
+            {
+                $push: {
+                    "likesInfo.users": {
+                        userId,
+                        likeStatus,
+                    },
+                },
+            }
+        )
+        return result.matchedCount === 1
+    }
+
+    async updatePostLikesCount(
+        postId: string,
+        likesCount: number,
+        dislikesCount: number
+    ): Promise<boolean> {
+        const result: any = await PostsModel.updateOne(
+            { _id: postId },
+            {
+                $set: {
+                    "likesInfo.likesCount": likesCount,
+                    "likesInfo.dislikesCount": dislikesCount,
+                },
+            }
+        )
+        return result.matchedCount === 1
+    }
+
+    async findUserLikeStatus(
+        postId: string,
+        userId: ObjectId
+    ): Promise<string | null> {
+        const foundUser: any = await PostsModel.findOne(
+            { _id: postId },
+            {
+                "likesInfo.users": {
+                    $filter: {
+                        input: "$likesInfo.users",
+                        cond: { $eq: ["$$this.userId", userId.toString()] },
+                    },
+                },
+            }
+        )
+
+        if (!foundUser || foundUser.likesInfo.users.length === 0) {
+            return null
+        }
+
+        return foundUser.likesInfo.users[0].likeStatus
+    }
+
+    async updateLikesStatus(
+        postId: string,
+        userId: ObjectId,
+        likeStatus: string
+    ): Promise<boolean> {
+        const result: any = await PostsModel.updateOne(
+            { _id: postId, "likesInfo.users.userId": userId },
+            {
+                $set: {
+                    "likesInfo.users.$.likeStatus": likeStatus,
+                },
+            }
+        )
+
+        return result.matchedCount === 1
+    }
+
 }
