@@ -15,5 +15,9 @@ export class UserDBModel {
       expirationDate: Date | null
       isConfirmed: boolean
     },
+    public passwordRecovery?: {
+          recoveryCode: string | null;
+          expirationDate: Date | null;
+      }
   ) {}
 }

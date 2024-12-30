@@ -35,6 +35,10 @@ export class UsersService {
                     minutes: 10
                 }),
                 isConfirmed:false,
+            },
+            {
+                recoveryCode: null,
+                expirationDate: null,
             }
         )
 
