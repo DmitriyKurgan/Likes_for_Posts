@@ -11,6 +11,7 @@ import {
 import {container} from "../composition-root";
 import {PostsController} from "../controllers/PostsController";
 import {validateLikesRequestsInputParams} from "../middlewares/validations/input/like-for-comment-input-validation";
+import {tokenParser} from "../middlewares/auth/token-parser";
 
 export const postsRouter = Router({})
 
@@ -23,6 +24,9 @@ postsRouter.get(
 
 postsRouter.get(
     '/:id',
+    validationPostFindByParamId,
+    tokenParser,
+    validateErrorsMiddleware,
     postsController.getSpecificPost.bind(postsController)
 )
 

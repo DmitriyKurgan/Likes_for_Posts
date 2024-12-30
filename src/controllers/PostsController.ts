@@ -53,6 +53,9 @@ export class PostsController {
         const postID:string = req.params.id
         const postByID:PostDBModel|null = await this.postsQueryRepository.findPostByID(postID, new ObjectId(req.userId!))
 
+        console.log('postID: ', postID)
+        console.log('postByID: ', postByID)
+
         if (!postID || !postByID){
             return res.sendStatus(CodeResponsesEnum.Not_found_404)
         }
