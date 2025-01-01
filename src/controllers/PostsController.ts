@@ -39,6 +39,7 @@ export class PostsController {
             queryValues.pageSize,
             queryValues.sortBy,
             queryValues.sortDirection,
+            new ObjectId(req.userId!),
         )
 
         if (!posts || !posts.items.length) {

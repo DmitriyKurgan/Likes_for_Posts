@@ -68,7 +68,7 @@ export class PostsQueryRepository {
         const filter: FilterQuery<PostDBModel> = {};
 
         if (blogId) {
-            filter.blogId = blogId;
+            filter.blogId = blogId
         }
 
         const sortingObj: { [key: string]: SortOrder } = { [sortBy]: "desc" };
@@ -87,7 +87,7 @@ export class PostsQueryRepository {
         const pagesCount = Math.ceil(totalCount / pageSize)
 
 
-
+        console.log('userId: ', userId)
         return {
             pagesCount: pagesCount,
             page: pageNumber,
@@ -100,13 +100,13 @@ export class PostsQueryRepository {
     private async postsMapping(array: PostDBModel[], userId?: ObjectId) {
         return Promise.all(
             array.map(async (post) => {
-                let status;
+                let status
 
                 if (userId) {
                     status = await this.postsRepository.findUserLikeStatus(
                         post._id.toString(),
                         userId
-                    );
+                    )
                 }
 
                 const likesArray = post.likesInfo.users;
