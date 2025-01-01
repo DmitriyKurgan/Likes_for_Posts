@@ -7,7 +7,7 @@ import {
 
 const blogsQueryRepository = container.resolve(BlogsQueryRepository)
 
-export const validationPostFindByParamId = body("blogId").custom(
+export const validationBlogForPostFindByParamId = body("blogId").custom(
 
     async (value) => {
 
