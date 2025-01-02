@@ -41,9 +41,9 @@ postsRouter.get(
 postsRouter.post(
     '/',
     validateBasicAuthorization,
+    tokenParser,
     validatePostsRequestsInputParams,
     validateBlogIdForPostsRequestsInputParams,
-    validationBlogForPostFindByParamId,
     validateErrorsMiddleware,
     postsController.createPost.bind(postsController)
 )

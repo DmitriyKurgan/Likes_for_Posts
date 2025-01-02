@@ -86,8 +86,6 @@ export class PostsQueryRepository {
         const totalCount = await PostsModel.countDocuments(filter)
         const pagesCount = Math.ceil(totalCount / pageSize)
 
-
-        console.log('userId: ', userId)
         return {
             pagesCount: pagesCount,
             page: pageNumber,
