@@ -41,7 +41,6 @@ postsRouter.get(
 postsRouter.post(
     '/',
     validateBasicAuthorization,
-    tokenParser,
     validatePostsRequestsInputParams,
     validateBlogIdForPostsRequestsInputParams,
     validateErrorsMiddleware,
