@@ -12,7 +12,6 @@ import {PostsController} from "../controllers/PostsController";
 import {validateLikesRequestsInputParams} from "../middlewares/validations/input/like-for-comment-input-validation";
 import {tokenParser} from "../middlewares/auth/token-parser";
 import {validationPostsFindByParamId} from "../middlewares/validations/find-by-id/post-validation";
-import {validationBlogForPostFindByParamId} from "../middlewares/validations/find-by-id/blog_id-for_post-validation";
 
 export const postsRouter = Router({})
 
