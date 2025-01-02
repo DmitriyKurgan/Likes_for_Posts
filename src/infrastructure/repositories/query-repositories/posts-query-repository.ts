@@ -46,10 +46,10 @@ export class PostsQueryRepository {
                         .sort((a: { addedAt: string; }, b: { addedAt: any; }) => -a.addedAt.localeCompare(b.addedAt))
                         .map((post: { addedAt: any, userId: any, userLogin: any }) => {
                             return {
-                                addedAt: post.addedAt,
+                               // addedAt: post.addedAt,
                                 userId: post.userId,
-                                login: post.userLogin,
-                            };
+                               // login: post.userLogin,
+                            }
                         })
                         .splice(0, 3),
                 }
@@ -126,9 +126,9 @@ export class PostsQueryRepository {
                             .sort((a, b) => -a.addedAt.localeCompare(b.addedAt))
                             .map((post) => {
                                 return {
-                                    addedAt: post.addedAt.toString(),
+                                   // addedAt: post.addedAt.toString(),
                                     userId: post.userId,
-                                    login: post.userLogin,
+                                   // login: post.userLogin,
                                 }
                             })
                             .splice(0, 3)

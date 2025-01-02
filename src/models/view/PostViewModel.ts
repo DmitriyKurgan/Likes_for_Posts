@@ -1,7 +1,7 @@
 type likes = {
-  addedAt: string,
+ // addedAt: string,
   userId: string,
-  login: string
+ // login: string
 }
 
 export type PostViewModel = {
