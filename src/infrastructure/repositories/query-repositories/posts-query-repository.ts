@@ -28,7 +28,7 @@ export class PostsQueryRepository {
         }
 
         const likesArray = foundPost.likesInfo.users
-
+        console.log('likesArray: ', likesArray)
           return {
               id: foundPost._id.toString(),
               title: foundPost.title,
@@ -107,8 +107,8 @@ export class PostsQueryRepository {
                     )
                 }
 
-                const likesArray = post.likesInfo.users;
-
+                const likesArray = post.likesInfo.users
+                console.log('likesArray: ', likesArray)
                 return {
                     id: post._id.toString(),
                     title: post.title,

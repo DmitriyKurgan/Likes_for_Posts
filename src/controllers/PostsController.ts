@@ -153,8 +153,8 @@ export class PostsController {
 
         const isUpdated = await this.postsService.updateLikeStatus(
             req.params.id,
+            new ObjectId(req.userId!),
             req.body.likeStatus,
-            req.userId!
         )
 
         if (isUpdated) {
