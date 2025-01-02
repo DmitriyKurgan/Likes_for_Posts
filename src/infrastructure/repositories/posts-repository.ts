@@ -75,14 +75,18 @@ export class PostsRepository {
     async pushUserInLikesInfo(
         postId: string,
         userId: ObjectId,
-        likeStatus: string
+        likeStatus: string,
+        addedAt: string,
+        userLogin: string
     ): Promise<boolean> {
         const result: any = await PostsModel.updateOne(
             { _id: postId },
             {
                 $push: {
                     "likesInfo.users": {
+                        addedAt,
                         userId,
+                        userLogin,
                         likeStatus,
                     },
                 },

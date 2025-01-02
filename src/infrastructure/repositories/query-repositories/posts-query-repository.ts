@@ -83,6 +83,8 @@ export class PostsQueryRepository {
             .limit(pageSize > 0 ? pageSize : 0)
             .lean();
 
+        console.log('posts: ', posts)
+
         const totalCount = await PostsModel.countDocuments(filter)
         const pagesCount = Math.ceil(totalCount / pageSize)
 
@@ -123,7 +125,7 @@ export class PostsQueryRepository {
                         myStatus: status || "None",
                         newestLikes: likesArray
                             .filter((post) => post.likeStatus === "Like")
-                            .sort((a, b) => -a.addedAt.localeCompare(b.addedAt))
+                            .sort((a, b) => -a?.addedAt?.localeCompare(b?.addedAt))
                             .map((post) => {
                                 return {
                                     addedAt: post.addedAt.toString(),

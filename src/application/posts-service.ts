@@ -3,12 +3,14 @@ import {PostViewModel} from "../models/view/PostViewModel";
 import {PostDBModel} from "../models/database/PostDBModel";
 import {ObjectId} from "mongodb";
 import {inject, injectable} from "inversify";
+import {UsersQueryRepository} from "../infrastructure/repositories/query-repositories/users-query-repository";
 
 export const posts = [] as PostViewModel[]
 @injectable()
 export class PostsService {
     constructor(
-        @inject(PostsRepository) protected postsRepository: PostsRepository
+        @inject(PostsRepository) protected postsRepository: PostsRepository,
+        @inject(UsersQueryRepository) protected usersQueryRepository: UsersQueryRepository
     ) {}
     async createPost(body:PostDBModel, blogName:string,blogID:string):Promise<PostViewModel | null> {
 
@@ -60,11 +62,18 @@ export class PostsService {
             userId
         )
 
+
+        const addedAt = new Date().toISOString();
+        const user = await this.usersQueryRepository.findUserByID(userId.toString())
+        const login = user!.accountData.userName
+
         if (!foundUser) {
             await this.postsRepository.pushUserInLikesInfo(
                 postId,
                 userId,
-                likeStatus
+                likeStatus,
+                addedAt,
+                login
             )
 
             if (likeStatus === "Like") {
