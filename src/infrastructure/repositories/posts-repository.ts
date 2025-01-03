@@ -128,7 +128,7 @@ export class PostsRepository {
             }
         )
 
-        if (!foundUser || foundUser.likesInfo.users.length === 0) {
+        if (!foundUser || !foundUser.likesInfo.users[0]) {
             return null
         }
 
