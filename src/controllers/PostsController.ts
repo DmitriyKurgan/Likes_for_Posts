@@ -159,11 +159,12 @@ export class PostsController {
 
         if (isUpdated) {
 
-            const updatedComment = await this.postsQueryRepository.findPostByID(
-                req.params.id
+            const updatedPost = await this.postsQueryRepository.findPostByID(
+                req.params.id,
+                new ObjectId(req.userId!)
             )
 
-            res.status(204).json(updatedComment)
+            res.status(204).json(updatedPost)
         }
     }
 

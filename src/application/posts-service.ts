@@ -62,8 +62,7 @@ export class PostsService {
             userId
         )
 
-
-        const addedAt = new Date().toISOString();
+        const addedAt = new Date().toISOString()
         const user = await this.usersQueryRepository.findUserByID(userId.toString())
         const login = user!.accountData.userName
 

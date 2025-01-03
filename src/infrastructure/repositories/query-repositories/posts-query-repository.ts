@@ -17,11 +17,12 @@ export class PostsQueryRepository {
     async findPostByID(postID:string, userId?: ObjectId):Promise<HydratedDocument<any> | null> {
 
       const foundPost: any = await PostsModel.findOne({_id: new ObjectId(postID)})
+
         if (!foundPost) {
-            return null;
+            return null
         }
 
-        let status;
+        let status
 
         if (userId) {
             status = await this.postsRepository.findUserLikeStatus(foundPost._id, userId)
@@ -81,9 +82,7 @@ export class PostsQueryRepository {
             .sort(sortingObj)
             .skip(pageNumber > 0 ? (pageNumber - 1) * pageSize : 0)
             .limit(pageSize > 0 ? pageSize : 0)
-            .lean();
-
-        console.log('posts: ', posts)
+            .lean()
 
         const totalCount = await PostsModel.countDocuments(filter)
         const pagesCount = Math.ceil(totalCount / pageSize)
@@ -110,7 +109,7 @@ export class PostsQueryRepository {
                 }
 
                 const likesArray = post.likesInfo.users
-                console.log('likesArray: ', likesArray)
+
                 return {
                     id: post._id.toString(),
                     title: post.title,
