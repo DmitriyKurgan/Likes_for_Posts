@@ -105,13 +105,8 @@ export class PostsQueryRepository {
             array.map(async (post) => {
                 let status
 
-                if (userId) {
-                    status = await this.postsRepository.findUserLikeStatus(
-                        post._id.toString(),
-                        userId
-                    )
-                }
-                console.log('post: ', post)
+                status = post.likesInfo.users.find((user) => user.userId === userId?.toString())?.likeStatus
+
                 const likesArray = post.likesInfo.users
 
                 return {
