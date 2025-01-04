@@ -127,12 +127,11 @@ export class PostsRepository {
                 },
             }
         )
-
-        if (!foundUser || !foundUser.likesInfo.users[0]) {
+        if (!foundUser) {
             return null
         }
 
-        return foundUser.likesInfo.users[0].likeStatus
+        return foundUser.likesInfo.users?.[0]?.likeStatus
     }
 
     async updateLikesStatus(
