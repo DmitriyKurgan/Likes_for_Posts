@@ -114,7 +114,10 @@ export class PostsQueryRepository {
                 console.log('post: ', post)
                 const likesArray = post.likesInfo.users
 
-                if (!post.likesInfo.likesCount && !post.likesInfo.dislikesCount || post.likesInfo.likesCount === post.likesInfo.dislikesCount) {
+                if (!post.likesInfo.likesCount && !post.likesInfo.dislikesCount
+                    || post.likesInfo.likesCount === post.likesInfo.dislikesCount
+                    || post.likesInfo.likesCount%2 === 0 && post.likesInfo.dislikesCount%2 === 0
+                ) {
                     status = "None"
                 } else if (post.likesInfo.likesCount > post.likesInfo.dislikesCount) {
                     status = "Like"
