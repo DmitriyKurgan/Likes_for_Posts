@@ -30,7 +30,6 @@ export class TestingController {
     // await this.commentsRepository.deleteAll()
     // await this.devicesRepository.deleteAll()
 
-
     await BlogModel.deleteMany({})
     await PostsModel.deleteMany({})
     await UsersModel.deleteMany({})
