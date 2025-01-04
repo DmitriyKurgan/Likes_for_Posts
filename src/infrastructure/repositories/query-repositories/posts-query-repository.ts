@@ -44,7 +44,11 @@ export class PostsQueryRepository {
                         myStatus: status || "None",
                         newestLikes: likesArray
                         .filter((post: { likeStatus: string }) => post.likeStatus === "Like")
-                        .sort((a: { addedAt: string; }, b: { addedAt: any; }) => -a.addedAt.localeCompare(b.addedAt))
+                            .sort((a:any, b:any) => {
+                                const dateA = new Date(a?.addedAt).getTime()
+                                const dateB = new Date(b?.addedAt).getTime()
+                                return dateB - dateA
+                            })
                         .map((post: { addedAt: any, userId: any, userLogin: any }) => {
                             return {
                                 addedAt: post.addedAt,
@@ -132,7 +136,11 @@ export class PostsQueryRepository {
                         myStatus: status || "None",
                         newestLikes: likesArray
                             .filter((post) => post.likeStatus === "Like")
-                            .sort((a, b) => -a?.addedAt?.localeCompare(b?.addedAt))
+                            .sort((a, b) => {
+                                const dateA = new Date(a?.addedAt).getTime()
+                                const dateB = new Date(b?.addedAt).getTime()
+                                return dateB - dateA
+                            })
                             .map((post) => {
                                 return {
                                     addedAt: post.addedAt.toString(),
