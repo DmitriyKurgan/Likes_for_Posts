@@ -121,7 +121,7 @@ export class PostsQueryRepository {
                     extendedLikesInfo: {
                         likesCount: post.likesInfo.likesCount,
                         dislikesCount: post.likesInfo.dislikesCount,
-                        myStatus: status || (filteredLikesArray.length ? "Like" : "None"),
+                        myStatus: status || "None",
                         newestLikes: likesArray
                             .filter((post) => post.likeStatus === "Like")
                             .sort((a, b) => -a?.addedAt?.localeCompare(b?.addedAt))
