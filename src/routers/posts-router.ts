@@ -19,6 +19,8 @@ const postsController = container.resolve(PostsController)
 
 postsRouter.get(
     '/',
+    tokenParser,
+    validateErrorsMiddleware,
     postsController.getPosts.bind(postsController)
 )
 

@@ -107,9 +107,9 @@ export class PostsQueryRepository {
                         userId
                     )
                 }
-
+                console.log('status: ', status)
                 const likesArray = post.likesInfo.users
-
+                const filteredLikesArray = likesArray.filter((post) => post.likeStatus === "Like")
                 return {
                     id: post._id.toString(),
                     title: post.title,
@@ -121,7 +121,7 @@ export class PostsQueryRepository {
                     extendedLikesInfo: {
                         likesCount: post.likesInfo.likesCount,
                         dislikesCount: post.likesInfo.dislikesCount,
-                        myStatus: status || "None",
+                        myStatus: status || (filteredLikesArray.length ? "Like" : "None"),
                         newestLikes: likesArray
                             .filter((post) => post.likeStatus === "Like")
                             .sort((a, b) => -a?.addedAt?.localeCompare(b?.addedAt))
