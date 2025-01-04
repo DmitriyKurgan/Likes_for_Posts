@@ -108,9 +108,9 @@ export class PostsService {
                 break
 
             case "Like":
-                if (likeStatus === "Like") {
-                    likeStatus = 'None'
-                }
+                // if (likeStatus === "Like") {
+                //     likeStatus = 'None'
+                // }
 
                 if (likeStatus === "None") {
                     likesCount--
@@ -123,9 +123,9 @@ export class PostsService {
                 break
 
             case "Dislike":
-                if (likeStatus === "Dislike") {
-                    likeStatus = 'None'
-                }
+                // if (likeStatus === "Dislike") {
+                //     likeStatus = 'None'
+                // }
 
                 if (likeStatus === "None") {
                     dislikesCount--
