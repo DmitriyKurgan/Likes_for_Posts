@@ -107,9 +107,17 @@ export class PostsQueryRepository {
                         userId
                     )
                 }
-                console.log('status: ', status)
+                console.log('post: ', post)
                 const likesArray = post.likesInfo.users
-                const filteredLikesArray = likesArray.filter((post) => post.likeStatus === "Like")
+
+                if (!post.likesInfo.likesCount && !post.likesInfo.dislikesCount) {
+                    status = "None"
+                } else if (post.likesInfo.likesCount > post.likesInfo.dislikesCount) {
+                    status = "Like"
+                } else if (post.likesInfo.likesCount < post.likesInfo.dislikesCount) {
+                    status = "Dislike"
+                }
+
                 return {
                     id: post._id.toString(),
                     title: post.title,
