@@ -95,9 +95,7 @@ describe('/posts', () => {
     let cookie2 = ''
     beforeAll(async () => {await runDB()})
     it('should delete all data', async () => {
-        console.log(1)
         await request(app).delete('/testing/all-data').expect(204)
-        console.log(2)
     })
 
     it('should seed start data', async () => {
