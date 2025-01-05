@@ -29,7 +29,7 @@ export class TestingController {
     // await this.usersRepository.deleteAll()
     // await this.commentsRepository.deleteAll()
     // await this.devicesRepository.deleteAll()
-
+    console.log('start delete db')
     await BlogModel.deleteMany({})
     await PostsModel.deleteMany({})
     await UsersModel.deleteMany({})
@@ -37,6 +37,7 @@ export class TestingController {
     await UsersSessionModel.deleteMany({})
     await TokensModel.deleteMany({})
     await AttemptsModel.deleteMany({})
+    console.log('deleted collections')
     res.sendStatus(204)
   }
 }

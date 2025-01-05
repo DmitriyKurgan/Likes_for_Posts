@@ -6,6 +6,7 @@ import {validatePostsRequestsInputParams} from "../middlewares/validations/input
 import {validateErrorsMiddleware} from "../middlewares/general-errors-validator";
 import {container} from "../composition-root";
 import {BlogsController} from "../controllers/BlogsController";
+import {tokenParser} from "../middlewares/auth/token-parser";
 
 export const blogsRouter = Router({})
 
@@ -24,6 +25,7 @@ blogsRouter.get(
 
 blogsRouter.get(
     '/:id/posts',
+    tokenParser,
     blogsController.getPostsForBlog.bind(blogsController)
 )
 

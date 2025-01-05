@@ -62,7 +62,7 @@ export class BlogsController {
             sortDirection: req.query.sortDirection,
             searchNameTerm:req.query.searchNameTerm
         })
-
+        console.log('req.userId: ', req.userId)
         const posts = await this.postsQueryRepository.findAllPosts(
             queryValues.pageNumber,
             queryValues.pageSize,
